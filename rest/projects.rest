@@ -1,0 +1,49 @@
+### Project endpoints
+# GET routes are public. POST/PUT/DELETE may require a JWT depending on whether
+# authMiddleware is enabled on these routes.
+# Requires the VS Code "REST Client" extension (humao.rest-client).
+
+@baseUrl = http://localhost:3000/api
+
+# Paste a JWT from the verify-otp response here to authenticate write requests.
+@token = PASTE_JWT_HERE
+
+# Set after creating a project (copy the "_id" from the create response).
+@projectId = PASTE_PROJECT_ID_HERE
+
+### List all projects (public)
+GET {{baseUrl}}/projects
+
+### Get a single project by id (public)
+GET {{baseUrl}}/projects/{{projectId}}
+
+### Create a project
+# "image" is the URL returned by POST /api/upload (see upload.rest).
+POST {{baseUrl}}/projects
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "My Portfolio Site",
+  "category": "Web",
+  "year": "2026",
+  "link": "https://example.com",
+  "image": "https://res.cloudinary.com/your-cloud/image/upload/sample.jpg"
+}
+
+### Update a project
+PUT {{baseUrl}}/projects/{{projectId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Updated Title",
+  "category": "Web",
+  "year": "2026",
+  "link": "https://example.com",
+  "image": "https://res.cloudinary.com/your-cloud/image/upload/sample.jpg"
+}
+
+### Delete a project
+DELETE {{baseUrl}}/projects/{{projectId}}
+Authorization: Bearer {{token}}

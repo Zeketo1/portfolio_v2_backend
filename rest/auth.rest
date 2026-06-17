@@ -1,0 +1,35 @@
+### Auth endpoints
+# Passwordless admin login: request an OTP by email, then exchange the OTP for a JWT.
+# Requires the VS Code "REST Client" extension (humao.rest-client).
+# Click "Send Request" above each request.
+
+@baseUrl = http://localhost:3000/api
+@adminEmail = your-admin@email.com
+
+### 1. Request an OTP
+# Only the email set as ADMIN_EMAIL in .env is allowed.
+# In dev (no working Plunk key) the OTP is printed to the server console.
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{adminEmail}}"
+}
+
+### 2. Verify the OTP -> returns a JWT
+# Replace 123456 with the OTP from your email (or the server console).
+# The returned token is reused automatically by projects.rest via the shared variable below.
+# @name verifyOtp
+POST {{baseUrl}}/auth/verify-otp
+Content-Type: application/json
+
+{
+  "email": "{{adminEmail}}",
+  "otp": "123456"
+}
+
+###
+# After a successful verify, copy the "token" from the response and paste it into
+# the @token variable at the top of projects.rest (or use {{verifyOtp.response.body.token}}
+# within this same file).

@@ -1,0 +1,21 @@
+### Image upload endpoint
+# Uploads a single image to Cloudinary and returns its hosted URL.
+# The form field name MUST be "file" (matches upload.single("file") on the server).
+# Requires the VS Code "REST Client" extension (humao.rest-client).
+
+@baseUrl = http://localhost:3000/api
+
+### Upload an image
+# Put an image next to this file (e.g. rest/sample.jpg) or change the path after "< ".
+# Limits: images only, max 10 MB.
+# The response returns: { "url": "...", "publicId": "..." }
+# Use that "url" as the "image" value when creating a project (see projects.rest).
+POST {{baseUrl}}/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="sample.jpg"
+Content-Type: image/jpeg
+
+< ./sample.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
